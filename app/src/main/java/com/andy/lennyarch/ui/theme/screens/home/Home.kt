@@ -1,37 +1,65 @@
 package com.andy.lennyarch.ui.theme.screens.home
 
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.andy.lennyarch.ui.theme.navigation.ROUTE_ABOUT
-import com.andy.lennyarch.ui.theme.navigation.ROUTE_LOGIN
+import com.andy.lennyarch.ui.theme.navigation.ROUTE_ADD_PRODUCT
+import com.andy.lennyarch.ui.theme.navigation.ROUTE_VIEW_PRODUCT
 
 @Composable
 fun Home(navController: NavController){
-    Column (
-        horizontalAlignment =Alignment.CenterHorizontally ){
-Text(text = "This is the Home  Screen")
-     Spacer(modifier = Modifier.height(10.dp))
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.Red),
+        horizontalAlignment = Alignment.CenterHorizontally) {
+        var context= LocalContext.current
+//          var productdata=productviewmodel(navController,context)
+
+        Text(text = "Welcome to Home page",
+            color = Color.Cyan,
+            fontFamily = FontFamily.Cursive,
+            fontSize = 30.sp)
+        Spacer(modifier = Modifier.height(100.dp))
+
         Button(onClick = {
-            navController.navigate(ROUTE_LOGIN)
-        }) {
-        Text(text = "Click here to Log in ")
-    }
+            navController.navigate(ROUTE_ADD_PRODUCT)
+        },modifier = Modifier.fillMaxWidth()) {
+            Text(text = "Add Product")
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(onClick = {
+            navController.navigate(ROUTE_VIEW_PRODUCT)
+        },modifier = Modifier.fillMaxWidth()) {
+            Text(text = "View Product")
+        }
+
+
     }
 }
 
-@Preview(showSystemUi = true , showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomePreview(){
     Home(rememberNavController())

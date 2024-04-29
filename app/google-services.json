@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "370291007803",
+    "project_id": "lennyarch-76699",
+    "storage_bucket": "lennyarch-76699.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370291007803:android:c835b84549f83736ff171e",
+        "android_client_info": {
+          "package_name": "com.andy.lennyarch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjMn5O5oKfAbrkaiuSBUyB2BFemUXMcYo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
