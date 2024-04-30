@@ -1,16 +1,12 @@
 package com.andy.lennyarch.ui.theme.screens.products
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,29 +15,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberAsyncImagePainter
+//import coil.compose.rememberAsyncImagePainter
+
 import com.andy.lennyarch.ui.theme.data.ProductViewModel
-import com.andy.lennyarch.ui.theme.models.product
+import com.andy.lennyarch.ui.theme.models.Upload
 import com.andy.lennyarch.ui.theme.navigation.ROUTE_UPDATE_PRODUCT
 
 
-
-
 @Composable
-fun ViewProductsScreen(navController:NavHostController) {
+fun ViewUploadsScreen(navController:NavHostController) {
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
-        val context = LocalContext.current
-        val productRepository = ProductViewModel(navController, context)
-        val emptyProductState = remember { mutableStateOf(product("","","","")) }
-        val emptyProductsListState = remember { mutableStateListOf<product>() }
+        var context = LocalContext.current
+        var productRepository = ProductViewModel(navController, context)
 
-        val products = productRepository.viewProducts(emptyProductState, emptyProductsListState)
+
+        val emptyUploadState = remember { mutableStateOf(Upload("","","","","")) }
+        var emptyUploadsListState = remember { mutableStateListOf<Upload>() }
+
+        var uploads = productRepository.viewUploads(emptyUploadState, emptyUploadsListState)
 
 
         Column(
@@ -49,7 +46,7 @@ fun ViewProductsScreen(navController:NavHostController) {
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "All products",
+            Text(text = "All uploads",
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Cursive,
                 color = Color.Red)
@@ -57,11 +54,12 @@ fun ViewProductsScreen(navController:NavHostController) {
             Spacer(modifier = Modifier.height(20.dp))
 
             LazyColumn(){
-                items(products){
-                    ProductItem(
+                items(uploads){
+                    UploadItem(
                         name = it.name,
                         quantity = it.quantity,
                         price = it.price,
+                        imageUrl = it.imageUrl,
                         id = it.id,
                         navController = navController,
                         productRepository = productRepository
@@ -73,15 +71,19 @@ fun ViewProductsScreen(navController:NavHostController) {
 }
 
 
-
 @Composable
-fun ProductItem(name:String, quantity:String, price:String, id:String,
-                navController:NavHostController, productRepository:ProductViewModel) {
+fun UploadItem(name:String, quantity:String, price:String, imageUrl:String, id:String,
+               navController:NavHostController, productRepository:ProductViewModel) {
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(text = name)
         Text(text = quantity)
         Text(text = price)
+        Image(
+            painter = rememberAsyncImagePainter(imageUrl),
+            contentDescription = null,
+            modifier = Modifier.size(128.dp)
+        )
         Button(onClick = {
             productRepository.deleteProduct(id)
         }) {
@@ -93,11 +95,4 @@ fun ProductItem(name:String, quantity:String, price:String, id:String,
             Text(text = "Update")
         }
     }
-}
-
-@Preview
-@Composable
-fun ViewProductsScreenPreview() {
-    ViewProductsScreen(rememberNavController())
-
 }

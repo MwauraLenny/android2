@@ -17,6 +17,7 @@ import com.andy.lennyarch.ui.theme.screens.login.Login
 import com.andy.lennyarch.ui.theme.screens.products.AddProductsScreen
 import com.andy.lennyarch.ui.theme.screens.products.UpdateProductsScreen
 import com.andy.lennyarch.ui.theme.screens.products.ViewProductsScreen
+import com.andy.lennyarch.ui.theme.screens.products.ViewUploadsScreen
 import com.andy.lennyarch.ui.theme.screens.profile.Profile
 import com.andy.lennyarch.ui.theme.screens.register.Register
 
@@ -39,8 +40,9 @@ fun  AppNavHost(
         composable(ROUTE_VIEW_PRODUCT){ ViewProductsScreen(navController)}
         composable(ROUTE_UPDATE_PRODUCT+"/{id}"){
             passedData -> UpdateProductsScreen(
-                navController,passedData.arguments?.getString("id")!!
-            )
+                navController,passedData.arguments?.getString("id")!!) }
+        composable(ROUTE_VIEW_UPLOAD){
+            ViewUploadsScreen(navController)
         }
 
     }
